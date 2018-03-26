@@ -1,0 +1,13 @@
+*.mp4
+*.mp3
+*.wav
+*.exe
+ECT.cpp
+GRAPH.cpp
+make.cpp
+tester.cpp
+*.bmp
+*.7z
+.vscode
+Main.cpp
+stx.h
