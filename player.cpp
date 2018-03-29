@@ -2,6 +2,8 @@
 #include <fstream>
 #include <time.h>
 #include <mmsystem.h>
+#include <iostream>
+#define LL long long
 using namespace std;
 const int FPS = 8; 
 const int Width = 64;
@@ -10,10 +12,10 @@ static const char _Filename[13] = "badapple.txt";
 static const char _Audioname[13] = "badapple.wav";
 struct fpsctr{
     int _fps;
-    int _nowTime;
+    LL _nowTime;
     int _frame;
     int _argTime;
-    int _fromTime;
+    LL _fromTime;
     fpsctr(){}
     fpsctr(int fps){_fps = fps;_nowTime = GetTickCount();_argTime = 1000/_fps;}
     void reset(){_nowTime = GetTickCount();_frame = 0;_fromTime = _nowTime;}
@@ -21,7 +23,7 @@ struct fpsctr{
         _frame++;
         _nowTime = GetTickCount();
         int _btime = _fromTime + _frame*_argTime - _nowTime;
-        if(_btime)Sleep(_btime);
+        if(_btime>0)Sleep(_btime);
     }
 };
 void _Resetcurse(){
@@ -34,7 +36,8 @@ void _Resetcurse(){
 void _Audioplayer(const char *_filename);
 void _Loop(const char *_filename,const int _fps,const int _height){
     FILE *f = fopen(_filename,"r");
-    char _buffer[1024];
+    if(f==NULL)exit(1);
+    char _buffer[512];
     fpsctr _ctr(_fps);
     _Audioplayer(_Audioname);
     Sleep(400);
@@ -42,17 +45,18 @@ void _Loop(const char *_filename,const int _fps,const int _height){
     while(!feof(f)){
         _Resetcurse();
         for(int i = 0; i < _height; i++){
-            fgets(_buffer, 1024, f);
-            printf("%s",_buffer);
+            fgets(_buffer, 512, f);
+            cout<<_buffer;
         }
-        _ctr.delay();//printf("%d %d",_ctr._nowTime,_ctr._oldTime);
+        _ctr.delay();
     }
 }
 void _Audioplayer(const char *_filename){
     sndPlaySound(_filename, SND_FILENAME | SND_ASYNC);
-    //if(!PlaySound((LPCSTR)L"badapple.wav", NULL, SND_FILENAME | SND_ASYNC))exit(0);
 }
 int main(){
+    ios::sync_with_stdio(false);
+
     _Loop(_Filename,FPS,Height);
     return 0;
 }
