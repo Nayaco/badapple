@@ -40,7 +40,7 @@ void _Loop(const char *_filename,const int _fps,const int _height){
     char _buffer[512];
     fpsctr _ctr(_fps);
     _Audioplayer(_Audioname);
-    Sleep(400);
+    Sleep(10);
     _ctr.reset();
     while(!feof(f)){
         _Resetcurse();
