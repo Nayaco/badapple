@@ -17,7 +17,7 @@ struct fpsctr{
     int _argTime;
     LL _fromTime;
     fpsctr(){}
-    fpsctr(int fps){_fps = fps;_nowTime = GetTickCount();_argTime = 1000/_fps;}
+    fpsctr(int fps) {_fps = fps;_nowTime = GetTickCount();_argTime = 1000/_fps;}
     void reset(){_nowTime = GetTickCount();_frame = 0;_fromTime = _nowTime;}
     void delay(){
         _frame++;
